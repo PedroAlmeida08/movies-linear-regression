@@ -18,19 +18,19 @@ dados = dados.dropna(axis=0, how='any')
 profit = dados['gross'] - dados['budget']
 dados['profit'] = profit
 
-# # 4 - Filtro de filmes com duração mínima de X minutos e máxima de Y minutos -- 1533 rows x 7 columns, 2357 estão fora desse intervalo
+# 4 - Filtro de filmes com duração mínima de X minutos e máxima de Y minutos -- 1533 rows x 7 columns, 2357 estão fora desse intervalo
 
-# mean_duration = dados['duration'].mean()
-# min_value = mean_duration - 10
-# max_value = mean_duration + 10
+mean_duration = dados['duration'].mean()
+min_value = mean_duration - 10
+max_value = mean_duration + 10
 
-# dados = dados[(dados['duration'] >= min_value) &
-#               (dados['duration'] <= max_value)]
+dados = dados[(dados['duration'] >= min_value) &
+              (dados['duration'] <= max_value)]
 
-# # # 5 - Filtro de filmes entre os anos 2000 e 2016 -- 1152 rows x 7 columns
+# 5 - Filtro de filmes entre os anos 2000 e 2016 -- 1152 rows x 7 columns
 
-# # dados = dados[(dados['title_year'] >= 2000) &
-# #               (dados['title_year'] <= 2016)]
+dados = dados[(dados['title_year'] >= 2000) &
+              (dados['title_year'] <= 2016)]
 
 # 6 - Não é necessário tratar valores iguais a zero pois o dataframe não possui colunas com valores iguais a zero
 
