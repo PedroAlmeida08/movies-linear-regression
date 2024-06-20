@@ -64,6 +64,10 @@ genres = ','.join(genres)
 # with open('data/genres.txt', 'w') as file:
 #     file.write(genres)
 
+# 8 - Normalização da coluna de 'profit'
+dados['profit_norm'] = (dados['profit']-dados['profit'].min()) / \
+    (dados['profit'].max() - dados['profit'].min())
+
 # 8 - Exportação do dado tratado
 
 dados.to_csv('data/dados.csv', index=False, sep=',')

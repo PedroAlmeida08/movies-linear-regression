@@ -1,37 +1,16 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error, r2_score
 
 dados = pd.read_csv('data/dados.csv', sep=',')
-
-'''
-Para predizer a duração ideal de um filme baseado no profit, separados por genres, usando regressão linear, 
-você pode seguir os passos abaixo:
-
-Preparação dos Dados: Primeiro, você precisa preparar os dados de forma que cada filme esteja representado por uma linha, 
-onde cada gênero único é uma variável preditora (feature).
-
-Escolha do Modelo: Utilize regressão linear múltipla para prever a duração do filme (duration) com base no lucro (profit) e 
-nos gêneros como variáveis preditoras.
-
-Codificação dos Gêneros: Como você fez o encoding dos gêneros usando one-hot encoding, essas colunas binárias de gêneros
- serão suas variáveis independentes na regressão.
-
-Divisão dos Dados: Divida os dados em conjunto de treino e conjunto de teste para avaliação do modelo.
-
-Treinamento do Modelo: Aplique a regressão linear sobre os dados de treino.
-
-Avaliação do Modelo: Avalie o desempenho do modelo usando métricas como o erro quadrático médio sobre os dados de teste.
-'''
 
 # 1 - Selecionando as variáveis independentes (X) e a variável dependente (y)
 x = dados[['duration', 'Action', 'Adventure', 'Animation', 'Biography', 'Comedy',
            'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History',
            'Horror', 'Music', 'Musical', 'Mystery', 'Romance', 'Sci-Fi',
            'Sport', 'Thriller', 'War', 'Western']]
-y = dados.profit
+y = dados.profit_norm
 
 # 2 - Dividindo os dados em conjunto de treino e teste
 x_train, x_test, y_train, y_test = train_test_split(
@@ -43,11 +22,10 @@ modelo = LinearRegression().fit(x_train, y_train)
 # 4 - Fazendo predições com os dados de teste
 y_pred = modelo.predict(x_test)
 
-# 5 - Calculando o Erro Quadrático Médio (MSE)
+# Calculando o MSE
 mse = mean_squared_error(y_test, y_pred)
-print(mse)
+print(f'Mean Squared Error (MSE): {mse}')
 
-# # 6 - Gerando o gráfico
-# fig, ax = plt.subplots()
-# ax.scatter(y_pred, y_test)
-# plt.show()
+# Calculando o R²
+r2 = r2_score(y_test, y_pred)
+print(f'R² Score: {r2}')
