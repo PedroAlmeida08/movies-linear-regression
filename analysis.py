@@ -27,18 +27,21 @@ Avaliação do Modelo: Avalie o desempenho do modelo usando métricas como o err
 '''
 
 # 1 - Selecionando as variáveis independentes (X) e a variável dependente (y)
-x = dados.profit
-y = dados.duration
+x = dados[['duration', 'Action', 'Adventure', 'Animation', 'Biography', 'Comedy',
+           'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History',
+           'Horror', 'Music', 'Musical', 'Mystery', 'Romance', 'Sci-Fi',
+           'Sport', 'Thriller', 'War', 'Western']]
+y = dados.profit
 
 # 2 - Dividindo os dados em conjunto de treino e teste
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.33, random_state=42)
 
 # 3 - Criando e treinando o modelo de regressão linear
-modelo = LinearRegression().fit(x_train.values.reshape(-1, 1), y_train)
+modelo = LinearRegression().fit(x_train, y_train)
 
 # 4 - Fazendo predições com os dados de teste
-y_pred = modelo.predict(x_test.values.reshape(-1, 1))
+y_pred = modelo.predict(x_test)
 
 # 5 - Calculando o Erro Quadrático Médio (MSE)
 mse = mean_squared_error(y_test, y_pred)

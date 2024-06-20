@@ -18,14 +18,10 @@ dados = dados.dropna(axis=0, how='any')
 profit = dados['gross'] - dados['budget']
 dados['profit'] = profit
 
-# 4 - Filtro de filmes com duração mínima de X minutos e máxima de Y minutos -- 1533 rows x 7 columns, 2357 estão fora desse intervalo
+# 4 - Dividindo os filmes em intervalor de tempo distintos
 
-mean_duration = dados['duration'].mean()
-min_value = mean_duration - 10
-max_value = mean_duration + 10
-
-dados = dados[(dados['duration'] >= min_value) &
-              (dados['duration'] <= max_value)]
+dados['mid'] = dados['duration'].apply(lambda x: 1 if x <= 70 else 0)
+dados['long'] = dados['duration'].apply(lambda x: 1 if x > 70 else 0)
 
 # 5 - Filtro de filmes entre os anos 2000 e 2016 -- 1152 rows x 7 columns
 
@@ -40,8 +36,8 @@ has_zero = (dados == 0).any().any()
 # 7 - Expandindo a coluna de gêneros
 
 '''
-Para realizar o encoding de gêneros de forma que cada gênero em genres seja considerado individualmente, 
-você pode usar a técnica chamada one-hot encoding. No contexto do dataframe fornecido, isso significa criar 
+Para realizar o encoding de gêneros de forma que cada gênero em genres seja considerado individualmente,
+você pode usar a técnica chamada one-hot encoding. No contexto do dataframe fornecido, isso significa criar
 colunas binárias para cada gênero possível, onde 1 indica a presença do gênero em um filme e 0 indica a ausência.
 
 Veja como você pode fazer isso usando pandas:
@@ -50,7 +46,7 @@ Veja como você pode fazer isso usando pandas:
 
 2 - Obter todos os gêneros únicos: Identificar todos os gêneros que aparecem em todos os filmes.
 
-3 - Criar as colunas binárias: Criar novas colunas no dataframe para cada gênero único, preenchendo com 1 ou 0 
+3 - Criar as colunas binárias: Criar novas colunas no dataframe para cada gênero único, preenchendo com 1 ou 0
 conforme a presença do gênero em cada filme.
 
 str.get_dummies(sep='|') é usada para expandir os gêneros em colunas binárias.
@@ -65,8 +61,8 @@ dados = pd.concat([dados, dummies], axis=1)
 genres = dados.columns[7:].tolist()
 genres = ','.join(genres)
 
-with open('data/genres.txt', 'w') as file:
-    file.write(genres)
+# with open('data/genres.txt', 'w') as file:
+#     file.write(genres)
 
 # 8 - Exportação do dado tratado
 
