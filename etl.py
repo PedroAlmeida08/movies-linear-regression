@@ -18,10 +18,9 @@ dados = dados.dropna(axis=0, how='any')
 profit = dados['gross'] - dados['budget']
 dados['profit'] = profit
 
-# 4 - Dividindo os filmes em intervalor de tempo distintos
+# 4 - Removendo filmes que não são longa metragem (7 filmes removidos)
 
-dados['mid'] = dados['duration'].apply(lambda x: 1 if x <= 70 else 0)
-dados['long'] = dados['duration'].apply(lambda x: 1 if x > 70 else 0)
+dados = dados[(dados['duration'] >= 70)]
 
 # 5 - Filtro de filmes entre os anos 2000 e 2016 -- 1152 rows x 7 columns
 
