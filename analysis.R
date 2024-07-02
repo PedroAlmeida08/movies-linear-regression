@@ -1,15 +1,15 @@
-df.data <- read.csv('data/dados.csv')
+data <- readRDS('data/dados_R.rds')
 
-df.regression <- lm(profit_norm ~ duration_norm + Action + Adventure + Animation + 
-                      Biography + Comedy + Crime + Documentary + Drama + 
-                      Family + Fantasy + History + Horror + Music + Musical + 
-                      Mystery + Romance + Sci.Fi + Sport + Thriller + 
-                      War + Western, data=df.data)
+modelo <- lm(profit_norm ~ duration_norm + Action + Adventure + Animation + 
+             Biography + Comedy + Crime + Documentary + Drama + 
+             Family + Fantasy + History + Horror + Music + Musical + 
+             Mystery + Romance + Sci_Fi + Sport + Thriller + 
+             War + Western, data=data)
 
-summary(df.regression)
+summary(modelo)
 
 # Resíduos do modelo
-res <- residuals(df.regression)
+res <- residuals(modelo)
 
 # Quadrados dos erros (resíduos)
 squared_errors <- res^2
